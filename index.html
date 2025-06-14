@@ -1,590 +1,548 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #a7c598; -webkit-text-stroke: #a7c598}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s4 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s5 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s6 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s7 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s8 {font-kerning: none; color: #71c083; background-color: #171818; -webkit-text-stroke: 0px #71c083}
-    span.s9 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-    span.s10 {font-kerning: none; color: #6d7378; background-color: #171818; -webkit-text-stroke: 0px #6d7378}
-    span.s11 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s12 {font-kerning: none}
-    span.s13 {font-kerning: none; color: #f67c30; background-color: #171818; -webkit-text-stroke: 0px #f67c30}
-    span.s14 {font-kerning: none; color: #36c0a0; background-color: #171818; -webkit-text-stroke: 0px #36c0a0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Isomerasas (v13)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            padding-top: 2rem;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow::after {
+            content: '→';
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #42A5F5;
+            margin: 0 1rem;
+            align-self: center;
+        }
+        .flow-arrow-down::after {
+            content: '↓';
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #42A5F5;
+            margin: 1rem 0;
+            align-self: center;
+        }
+        .bibliography-item {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .mechanism-diagram-step {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .mechanism-diagram-step.active, .mechanism-diagram-step:hover {
+            transform: translateY(-5px);
+            border-color: #42A5F5;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .diagram-arrow {
+            font-size: 3rem; color: #d1d5db; /* gray-300 */
+        }
+        .enzyme-body {
+            width: 100px;
+            height: 90px;
+            background: linear-gradient(135deg, #90CAF9, #1E88E5);
+            border-radius: 50% 50% 45% 55% / 60% 40% 60% 40%;
+            position: relative;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.4s ease-in-out;
+        }
+        .active-site {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #f1f5f9; /* bg-slate-100 */
+            right: 0px;
+            top: 20px;
+            border-radius: 50%;
+            transform: translateX(40%);
+            box-shadow: inset -2px 2px 5px rgba(0,0,0,0.15);
+        }
+        .enzyme-body.closed {
+            border-radius: 50%;
+        }
+        .enzyme-body.closed .active-site {
+            transform: translateX(0);
+            opacity: 0;
+        }
+        .substrate-mol {
+            width: 30px;
+            height: 30px;
+            background-color: #f472b6; /* pink-400 */
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            border: 2px solid #ec4899;
+        }
+        .product-mol {
+            width: 30px;
+            height: 30px;
+            background-color: #a78bfa; /* violet-400 */
+            border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            border: 2px solid #8b5cf6;
+        }
+        .mol-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: bold;
+            color: #475569;
+            background: #fff;
+            padding: 0 4px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .residue-label {
+            position: absolute;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e3a8a;
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+        .label-line {
+            position: absolute;
+            width: 1px;
+            background-color: #94a3b8;
+        }
+        .proton {
+            width: 16px; height: 16px;
+            background-color: #facc15; /* yellow-400 */
+            color: #713f12; /* yellow-900 */
+            border-radius: 50%;
+            font-size: 9px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            border: 1px solid #a16207;
+            z-index: 10;
+        }
+        .proton-arrow {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #facc15;
+            z-index: 5;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s4">html</span><span class="s5"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s1">"es"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"scroll-smooth"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s6">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s5"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">title</span><span class="s3">&gt;</span><span class="s1">Infografía: Isomerasas (v13)</span><span class="s3">&lt;/</span><span class="s4">title</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.jsdelivr.net/npm/chart.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.gstatic.com"</span><span class="s5"> </span><span class="s2">crossorigin</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap"</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">body</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s8">'Inter'</span><span class="s7">,</span><span class="s1"> </span><span class="s6">sans-serif</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding-top:</span><span class="s1"> </span><span class="s9">2rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.chart-container</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">relative</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">100%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">300px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>@</span><span class="s4">media</span><span class="s1"> (</span><span class="s4">min-width:</span><span class="s1"> 768</span><span class="s4">px</span><span class="s1">) </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>.chart-container {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">350px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.flow-arrow::after</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">content:</span><span class="s1"> </span><span class="s8">'→'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">2.5rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">line-height:</span><span class="s1"> </span><span class="s9">1</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #42A5F5</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s9">0</span><span class="s1"> </span><span class="s9">1rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-self:</span><span class="s1"> </span><span class="s6">center</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.flow-arrow-down::after</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">content:</span><span class="s1"> </span><span class="s8">'↓'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">2.5rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">line-height:</span><span class="s1"> </span><span class="s9">1</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #42A5F5</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s9">1rem</span><span class="s1"> </span><span class="s9">0</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-self:</span><span class="s1"> </span><span class="s6">center</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.bibliography-item</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">margin-bottom:</span><span class="s5"> </span><span class="s9">1rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">line-height:</span><span class="s1"> </span><span class="s9">1.6</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.mechanism-diagram-step</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s6">pointer</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s6">all</span><span class="s1"> </span><span class="s9">0.2s</span><span class="s1"> </span><span class="s6">ease-in-out</span><span class="s7">;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s5"> </span><span class="s9">2px</span><span class="s5"> </span><span class="s1">solid</span><span class="s5"> </span><span class="s1">transparent</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">relative</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.mechanism-diagram-step.active</span><span class="s7">,</span><span class="s5"> </span><span class="s1">.mechanism-diagram-step:hover</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s6">translateY(</span><span class="s9">-5px</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-color:</span><span class="s1"> #42A5F5</span><span class="s7">;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s1">10px</span><span class="s5"> </span><span class="s1">15px</span><span class="s5"> </span><span class="s1">-3px</span><span class="s5"> </span><span class="s6">rgb(</span><span class="s1">0</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s7">/</span><span class="s5"> </span><span class="s1">0.1</span><span class="s6">)</span><span class="s7">,</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s1">4px</span><span class="s5"> </span><span class="s1">6px</span><span class="s5"> </span><span class="s1">-4px</span><span class="s5"> </span><span class="s6">rgb(</span><span class="s1">0</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s7">/</span><span class="s5"> </span><span class="s1">0.1</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.diagram-arrow</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">3rem</span><span class="s7">;</span><span class="s1"> </span><span class="s2">color:</span><span class="s1"> #d1d5db</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* gray-300 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">       </span></span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">/* Restored Scientific Diagram Styles */</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.enzyme-body</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">100px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">90px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s6">linear-gradient(</span><span class="s9">135deg</span><span class="s7">,</span><span class="s1"> #90CAF9</span><span class="s7">,</span><span class="s1"> #1E88E5</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s5"> </span><span class="s1">50%</span><span class="s5"> </span><span class="s1">50%</span><span class="s5"> </span><span class="s1">45%</span><span class="s5"> </span><span class="s1">55%</span><span class="s5"> </span><span class="s7">/</span><span class="s5"> </span><span class="s1">60%</span><span class="s5"> </span><span class="s1">40%</span><span class="s5"> </span><span class="s1">60%</span><span class="s5"> </span><span class="s1">40%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">relative</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s6">inset</span><span class="s1"> </span><span class="s9">2px</span><span class="s1"> </span><span class="s9">2px</span><span class="s1"> </span><span class="s9">8px</span><span class="s1"> </span><span class="s6">rgba(</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0.2</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s6">all</span><span class="s1"> </span><span class="s9">0.4s</span><span class="s1"> </span><span class="s6">ease-in-out</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.active-site</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">50px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">50px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #f1f5f9</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* bg-slate-100 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">right:</span><span class="s1"> </span><span class="s9">0px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">top:</span><span class="s1"> </span><span class="s9">20px</span><span class="s7">;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">50%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s6">translateX(</span><span class="s9">40%</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s6">inset</span><span class="s1"> </span><span class="s9">-2px</span><span class="s1"> </span><span class="s9">2px</span><span class="s1"> </span><span class="s9">5px</span><span class="s1"> </span><span class="s6">rgba(</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0</span><span class="s7">,</span><span class="s9">0.15</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.enzyme-body.closed</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">50%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.enzyme-body.closed</span><span class="s5"> </span><span class="s1">.active-site</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s6">translateX(</span><span class="s9">0</span><span class="s6">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s9">0</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.substrate-mol</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">30px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">30px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #f472b6</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* pink-400 */</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s7">/</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">70%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s9">2px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #ec4899</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.product-mol</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">30px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s9">30px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #a78bfa</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* violet-400 */</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s7">/</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">70%</span><span class="s5"> </span><span class="s1">30%</span><span class="s5"> </span><span class="s1">30%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s9">2px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #8b5cf6</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.mol-label</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">12px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s6">bold</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #475569</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> #fff</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">0</span><span class="s1"> </span><span class="s9">4px</span><span class="s7">;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">4px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #e2e8f0</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.residue-label</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">11px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">600</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #1e3a8a</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s9">3px</span><span class="s7">;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">3px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.label-line</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">1px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #94a3b8</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.proton</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">16px</span><span class="s7">;</span><span class="s1"> </span><span class="s2">height:</span><span class="s1"> </span><span class="s9">16px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #facc15</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* yellow-400 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #713f12</span><span class="s7">;</span><span class="s1"> </span><span class="s10">/* yellow-900 */</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">50%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">9px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s6">bold</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s6">flex</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s6">center</span><span class="s7">;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s5"> </span><span class="s6">center</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #a16207</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s9">10</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.proton-arrow</span><span class="s5"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s6">absolute</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">1.5rem</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #facc15</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s9">5</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">animation:</span><span class="s1"> </span><span class="s6">pulse</span><span class="s1"> </span><span class="s9">1.5s</span><span class="s1"> </span><span class="s6">infinite</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">@keyframes</span><span class="s1"> </span><span class="s6">pulse</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s9">0%</span><span class="s7">,</span><span class="s1"> </span><span class="s9">100%</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s9">1</span><span class="s7">;</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s9">50%</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s9">0.4</span><span class="s7">;</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s4">body</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 text-slate-800"</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">main</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto p-4 md:p-8"</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"mechanism"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-16"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-3xl font-bold text-center text-[#00449E] mb-8"</span><span class="s3">&gt;</span><span class="s1">Mecanismo de la Triosafosfato Isomerasa (TIM)</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-6 md:p-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 items-center mb-12"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Step 1 --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"diagram-step-1"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-diagram-step active bg-slate-50 rounded-lg p-4 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-center items-center h-28 gap-4 relative"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"enzyme-body"</span><span class="s3">&gt;&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"active-site"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl text-slate-400"</span><span class="s3">&gt;</span><span class="s1">+</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"relative"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"substrate-mol"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mol-label -bottom-6"</span><span class="s3">&gt;</span><span class="s1">DHAP</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-4 font-semibold"</span><span class="s3">&gt;</span><span class="s1">1. Unión del Sustrato</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Arrow --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"diagram-arrow text-center hidden lg:block self-center"</span><span class="s3">&gt;</span><span class="s5">→</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Step 2 --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"diagram-step-2"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-center items-center h-28 relative"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"enzyme-body closed"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"absolute"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"top: 32px; left: 32px;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                   </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"substrate-mol"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                   </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"proton"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"top: -5px; left: 7px;"</span><span class="s3">&gt;</span><span class="s1">H+</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"residue-label"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"top: 8px; left: 25px;"</span><span class="s3">&gt;</span><span class="s1">Glu167</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"proton-arrow"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"top: 10px; left: 30px; transform: rotate(-45deg);"</span><span class="s3">&gt;</span><span class="s5">→</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"residue-label"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"bottom: 8px; left: 25px;"</span><span class="s3">&gt;</span><span class="s5">His95</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"proton-arrow"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"bottom: 10px; left: 30px; transform: rotate(45deg);"</span><span class="s3">&gt;</span><span class="s5">←</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"proton"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"bottom: -2px; left: 10px;"</span><span class="s3">&gt;</span><span class="s1">H+</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-4 font-semibold"</span><span class="s3">&gt;</span><span class="s1">2. Transferencia de Protones</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Arrow --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"diagram-arrow text-center hidden lg:block self-center"</span><span class="s3">&gt;</span><span class="s5">→</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Step 3 --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"diagram-step-3"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-center items-center h-28 relative"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"enzyme-body closed"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"background: linear-gradient(135deg, #81D4FA, #0288D1);"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"absolute"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"top: 32px; left: 32px;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                   </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"product-mol"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"residue-label"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"top: 8px; left: 25px;"</span><span class="s3">&gt;</span><span class="s1">Glu167</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"proton-arrow"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"top: 10px; left: 30px; transform: rotate(135deg);"</span><span class="s3">&gt;</span><span class="s5">←</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"proton"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s6">"top: -2px; left: 10px;"</span><span class="s3">&gt;</span><span class="s1">H+</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-4 font-semibold"</span><span class="s3">&gt;</span><span class="s1">3. Formación del Producto</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Arrow --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"diagram-arrow text-center hidden lg:block self-center"</span><span class="s3">&gt;</span><span class="s5">→</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">&lt;!-- Step 4 --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"diagram-step-4"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-center items-center h-28 gap-4 relative"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"enzyme-body"</span><span class="s3">&gt;&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"active-site"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl text-slate-400"</span><span class="s3">&gt;</span><span class="s1">+</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"relative"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"product-mol"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                               </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mol-label -bottom-6"</span><span class="s3">&gt;</span><span class="s1">GAP</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-4 font-semibold"</span><span class="s3">&gt;</span><span class="s1">4. Liberación del Producto</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"mechanism-descriptions"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 p-6 rounded-lg min-h-[150px]"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"desc-step-1"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-description"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-[#1976D2]"</span><span class="s3">&gt;</span><span class="s1">Paso 1: Unión del Sustrato y Cierre del Bucle</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">El sustrato (DHAP) se une al sitio activo de la enzima. Este evento desencadena que un bucle flexible se cierre sobre él, protegiendo los intermedios reactivos del agua y posicionando los residuos catalíticos.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"desc-step-2"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-description hidden"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-[#1976D2]"</span><span class="s3">&gt;</span><span class="s1">Paso 2: Formación del Intermedio *cis*-Enediolato</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Dentro del sitio activo cerrado, se produce una transferencia de protones concertada. El residuo catalítico </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Glu167</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s1"> actúa como una base para abstraer un protón (H+) del sustrato. Al mismo tiempo, </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">His95</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s1"> actúa como un ácido, donando un protón. Esto forma un intermedio de alta energía (Knowles, 1991).</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"desc-step-3"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-description hidden"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-[#1976D2]"</span><span class="s3">&gt;</span><span class="s1">Paso 3: Reprotonación y Formación del Producto</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">La enzima invierte la transferencia de protones. El </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Glu167</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s1">, ahora protonado y actuando como un ácido, devuelve el protón al intermedio en una posición diferente, mientras </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">His95</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s1"> recupera su protón. Este transbordo preciso forma el producto isómero (GAP).</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"desc-step-4"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mechanism-description hidden"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-[#1976D2]"</span><span class="s3">&gt;</span><span class="s1">Paso 4: Apertura del Bucle y Liberación</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Una vez formado el producto (GAP), el bucle "tapa" se abre, el sitio activo queda expuesto nuevamente al solvente y el producto se disocia. La enzima queda regenerada y lista para otro ciclo catalítico.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"industry"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-16"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">             </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-3xl font-bold text-center text-[#00449E] mb-8"</span><span class="s3">&gt;</span><span class="s1">Impacto en la Industria y la Biotecnología</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 lg:grid-cols-2 gap-12"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold text-center mb-4"</span><span class="s3">&gt;</span><span class="s1">Cuota de Mercado Histórica</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center text-sm mb-4"</span><span class="s3">&gt;</span><span class="s1">La producción de HFCS ha sido históricamente el pilar del mercado de las isomerasas.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"chart-container"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">canvas</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s6">"marketShareChart"</span><span class="s3">&gt;&lt;/</span><span class="s4">canvas</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mt-4 text-xs text-slate-500 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Basado en datos de Bhosale et al. (1996) y Li et al. (2012).</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold text-center mb-4"</span><span class="s3">&gt;</span><span class="s1">Proyecciones de Crecimiento (2025-2030)</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center text-sm mb-4"</span><span class="s3">&gt;</span><span class="s1">Se espera que la demanda de biocombustibles y productos farmacéuticos impulse el crecimiento futuro del mercado.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"chart-container"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">canvas</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s6">"marketGrowthChart"</span><span class="s3">&gt;&lt;/</span><span class="s4">canvas</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mt-4 text-xs text-slate-500 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Estimaciones basadas en análisis de tendencias de mercado (Grand View Research, 2024).</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">             </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mt-12 bg-white rounded-lg shadow-md p-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold mb-6 text-center"</span><span class="s3">&gt;</span><span class="s1">Aplicaciones Clave</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold text-[#1976D2] mb-2"</span><span class="s3">&gt;</span><span class="s1">Jarabe de Maíz de Alta Fructosa (HFCS)</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mb-4"</span><span class="s3">&gt;</span><span class="s1">La Glucosa Isomerasa (GI) es la piedra angular en la producción de HFCS, al convertir la glucosa en fructosa, que es </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-2xl text-[#005CB9]"</span><span class="s3">&gt;</span><span class="s1">1.3x</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s1"> más dulce.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center justify-center text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"p-4 bg-slate-100 rounded-lg"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Glucosa</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"flow-arrow"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"relative p-4 bg-blue-100 rounded-lg"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                                    </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"absolute -top-3 -right-3 bg-[#1976D2] text-white text-xs font-bold px-2 py-1 rounded-full"</span><span class="s3">&gt;</span><span class="s5">GI</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Fructosa</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold text-[#1976D2] mb-2"</span><span class="s3">&gt;</span><span class="s1">Producción de Bioetanol de 2ª Generación</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mb-4"</span><span class="s3">&gt;</span><span class="s1">La Xilosa Isomerasa (XI) permite a la levadura fermentar la xilosa de residuos agrícolas para producir biocombustibles.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                             </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center justify-center text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"p-4 bg-slate-100 rounded-lg"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Xilosa</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"flow-arrow"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"relative p-4 bg-blue-100 rounded-lg"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                                    </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"absolute -top-3 -right-3 bg-[#1976D2] text-white text-xs font-bold px-2 py-1 rounded-full"</span><span class="s3">&gt;</span><span class="s5">XI</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold"</span><span class="s3">&gt;</span><span class="s1">Etanol</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"health"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-16"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-3xl font-bold text-center text-[#00449E] mb-2"</span><span class="s3">&gt;</span><span class="s1">Un Interruptor de Doble Filo para la Salud</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-lg text-center max-w-4xl mx-auto mb-12"</span><span class="s3">&gt;</span><span class="s1">La actividad de las isomerasas es crítica en la salud humana. Su desregulación tiene efectos devastadores en enfermedades como el cáncer y el Alzheimer, convirtiéndolas en dianas terapéuticas.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-6 md:p-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold text-center mb-8"</span><span class="s3">&gt;</span><span class="s1">El Caso de Pin1: Héroe y Villano</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"border-2 border-red-200 bg-red-50 rounded-lg p-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold text-red-700 text-center mb-4"</span><span class="s3">&gt;</span><span class="s1">En el Cáncer: Sobreexpresión</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mb-6 text-center"</span><span class="s3">&gt;</span><span class="s1">Pin1 está hiperactiva. Actúa como un acelerador del crecimiento tumoral al "encender" oncogenes e "apagar" supresores de tumores.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-4 bg-red-100 rounded-lg inline-block"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-red-800"</span><span class="s3">&gt;</span><span class="s5">Pin1 ↑ (Hiperactiva)</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flow-arrow-down block my-2 text-red-400"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-4 bg-red-200 rounded-lg inline-block"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-red-900"</span><span class="s3">&gt;</span><span class="s5">Proliferación Celular</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-red-700"</span><span class="s3">&gt;</span><span class="s1">Objetivo Terapéutico: INHIBIR Pin1</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"border-2 border-sky-200 bg-sky-50 rounded-lg p-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-2xl font-bold text-sky-700 text-center mb-4"</span><span class="s3">&gt;</span><span class="s1">En el Alzheimer: Disminución</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mb-6 text-center"</span><span class="s3">&gt;</span><span class="s1">La función de Pin1 está disminuida. Su ausencia impide que cumpla su rol neuroprotector, llevando a la agregación de proteínas tóxicas.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-4 bg-sky-100 rounded-lg inline-block"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-sky-800"</span><span class="s3">&gt;</span><span class="s5">Pin1 ↓ (Inactiva)</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                             </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flow-arrow-down block my-2 text-sky-400"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-4 bg-sky-200 rounded-lg inline-block"</span><span class="s3">&gt;&lt;</span><span class="s4">span</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-sky-900"</span><span class="s3">&gt;</span><span class="s5">Muerte Neuronal</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mt-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-lg text-sky-700"</span><span class="s3">&gt;</span><span class="s1">Objetivo Terapéutico: ACTIVAR Pin1</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"other-applications"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-16"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-3xl font-bold text-center text-[#00449E] mb-8"</span><span class="s3">&gt;</span><span class="s1">Otras Aplicaciones Industriales y Biotecnológicas</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- App 1: Rare Sugars --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-6 rounded-lg shadow-md text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl mb-4"</span><span class="s3">&gt;</span><span class="s1">🍬</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold mb-2 text-[#005CB9]"</span><span class="s3">&gt;</span><span class="s5">Azúcares Raros</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-sm"</span><span class="s3">&gt;</span><span class="s1">Enzimas como la L-Arabinosa Isomerasa se usan para producir D-tagatosa, un edulcorante bajo en calorías para alimentos funcionales y productos para diabéticos.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- App 2: Pharma --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-6 rounded-lg shadow-md text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl mb-4"</span><span class="s3">&gt;</span><span class="s1">⚗️</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-2 text-[#005CB9]"</span><span class="s3">&gt;</span><span class="s1">Síntesis Farmacéutica</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-sm"</span><span class="s3">&gt;</span><span class="s1">Las racemasas son clave en la producción de intermedios quirales puros, separando enantiómeros para crear fármacos más seguros y eficaces.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- App 3: Textiles --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-6 rounded-lg shadow-md text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl mb-4"</span><span class="s3">&gt;</span><span class="s1">👕</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold mb-2 text-[#005CB9]"</span><span class="s3">&gt;</span><span class="s5">Industria Textil</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-sm"</span><span class="s3">&gt;</span><span class="s1">Las isomerasas ayudan en el procesamiento de fibras, mejorando la calidad de los tejidos y reduciendo el uso de productos químicos agresivos en el tratamiento de textiles.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- App 4: Diagnostics --&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-6 rounded-lg shadow-md text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-4xl mb-4"</span><span class="s3">&gt;</span><span class="s1">🔬</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-2 text-[#005CB9]"</span><span class="s3">&gt;</span><span class="s1">Biocensores y Diagnóstico</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-sm"</span><span class="s3">&gt;</span><span class="s1">La actividad de isomerasas específicas, como la GPI, puede medirse en biocensores para el diagnóstico rápido de ciertas enfermedades metabólicas o como marcadores.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"bibliography"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-16"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl font-bold text-center text-[#00449E] mb-8"</span><span class="s3">&gt;</span><span class="s5">Bibliografía</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-6 md:p-8 text-sm md:text-base"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Bhosale, S. H., Rao, M. B., &amp; Deshpande, V. V. (1996). Molecular and industrial aspects of glucose isomerase. </span><span class="s3">&lt;</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">Microbiological Reviews, 60</span><span class="s3">&lt;/</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">(2), 280–300. https://doi.org/10.1128/mr.60.2.280-300.1996</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Grand View Research. (2024). *Industrial Enzymes Market Size, Share &amp; Trends Analysis Report By Product, By Source, By Application (Food &amp; Beverages, Biofuel), By Region, And Segment Forecasts, 2024 - 2030*. Report ID: GVR-1-68038-735-5. </span><span class="s3">&lt;</span><span class="s4">a</span><span class="s1"> </span><span class="s2">href</span><span class="s3">=</span><span class="s6">"https://www.grandviewresearch.com/industry-analysis/industrial-enzymes-market"</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-blue-600 hover:underline"</span><span class="s1"> </span><span class="s2">target</span><span class="s3">=</span><span class="s6">"_blank"</span><span class="s3">&gt;</span><span class="s1">Enlace al informe</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Knowles, J. R. (1991). Enzyme catalysis: not different, just better. </span><span class="s3">&lt;</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">Nature, 350</span><span class="s3">&lt;/</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">(6314), 121–124. https://doi.org/10.1038/350121a0</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Li, S., Yang, X., Yang, S., Zhu, M., &amp; Wang, X. (2012). Technology prospecting on enzymes: application, marketing and engineering. </span><span class="s3">&lt;</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">Computational and Structural Biotechnology Journal, 2</span><span class="s3">&lt;/</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">(3), e201209017. https://doi.org/10.5936/csbj.201209017</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                   </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Mathews, C. K., Van Holde, K. E., &amp; Ahern, K. G. (2003). *Bioquímica* (3ª ed.). Addison Wesley.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Lu, K. P., &amp; Zhou, X. Z. (2007). The prolyl isomerase Pin1: a pivotal new twist in phosphorylation signalling and disease. </span><span class="s3">&lt;</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">Nature Reviews Molecular Cell Biology, 8</span><span class="s3">&lt;/</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">(11), 904–916. https://doi.org/10.1038/nrm2261</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bibliography-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3">&gt;</span><span class="s1">Xu, S., Sankar, S., &amp; Neamati, N. (2014). Protein disulfide isomerase: a promising target for cancer therapy. </span><span class="s3">&lt;</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">Drug Discovery Today, 19</span><span class="s3">&lt;/</span><span class="s4">em</span><span class="s3">&gt;</span><span class="s1">(3), 222–240. https://doi.org/10.1016/j.drudis.2013.10.017</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s4">main</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">footer</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 text-white text-center py-6 px-4 mt-8"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">footer</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>window</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'load'</span><span class="s7">,</span><span class="s1"> </span><span class="s11">function</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> tooltipTitleCallback </span><span class="s7">=</span><span class="s1"> </span><span class="s7">(</span><span class="s1">tooltipItems</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> item </span><span class="s7">=</span><span class="s1"> tooltipItems</span><span class="s7">[</span><span class="s13">0</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">let</span><span class="s1"> label </span><span class="s7">=</span><span class="s1"> item</span><span class="s7">.</span><span class="s1">chart</span><span class="s7">.</span><span class="s1">data</span><span class="s7">.</span><span class="s1">labels</span><span class="s7">[</span><span class="s1">item</span><span class="s7">.</span><span class="s1">dataIndex</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s14">Array</span><span class="s7">.</span><span class="s1">isArray</span><span class="s7">(</span><span class="s1">label</span><span class="s7">))</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s11">return</span><span class="s1"> label</span><span class="s7">.</span><span class="s1">join</span><span class="s7">(</span><span class="s8">' '</span><span class="s7">);</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">return</span><span class="s1"> label</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> wrapLabel </span><span class="s7">=</span><span class="s1"> </span><span class="s7">(</span><span class="s1">label</span><span class="s7">,</span><span class="s1"> maxWidth</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">label</span><span class="s7">.</span><span class="s1">length </span><span class="s7">&lt;=</span><span class="s1"> maxWidth</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s11">return</span><span class="s1"> label</span><span class="s7">;</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> words </span><span class="s7">=</span><span class="s1"> label</span><span class="s7">.</span><span class="s1">split</span><span class="s7">(</span><span class="s8">' '</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> lines </span><span class="s7">=</span><span class="s1"> </span><span class="s7">[];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">let</span><span class="s1"> currentLine </span><span class="s7">=</span><span class="s1"> </span><span class="s8">''</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>words</span><span class="s7">.</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">word </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">((</span><span class="s1">currentLine </span><span class="s7">+</span><span class="s1"> word</span><span class="s7">).</span><span class="s1">length </span><span class="s7">&gt;</span><span class="s1"> maxWidth</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>lines</span><span class="s7">.</span><span class="s1">push</span><span class="s7">(</span><span class="s1">currentLine</span><span class="s7">.</span><span class="s1">trim</span><span class="s7">());</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>currentLine </span><span class="s7">=</span><span class="s1"> </span><span class="s8">''</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>currentLine </span><span class="s7">+=</span><span class="s1"> word </span><span class="s7">+</span><span class="s1"> </span><span class="s8">' '</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>lines</span><span class="s7">.</span><span class="s1">push</span><span class="s7">(</span><span class="s1">currentLine</span><span class="s7">.</span><span class="s1">trim</span><span class="s7">());</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">return</span><span class="s1"> lines</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> marketShareCtx </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'marketShareChart'</span><span class="s7">).</span><span class="s1">getContext</span><span class="s7">(</span><span class="s8">'2d'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">new</span><span class="s1"> </span><span class="s14">Chart</span><span class="s7">(</span><span class="s1">marketShareCtx</span><span class="s7">,</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>type</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'doughnut'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>data</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>labels</span><span class="s7">:</span><span class="s5"> </span><span class="s7">[</span><span class="s1">'Jarabe de Maíz de Alta Fructosa (HFCS)'</span><span class="s7">,</span><span class="s5"> </span><span class="s1">'Producción de Bioetanol'</span><span class="s7">,</span><span class="s5"> </span><span class="s1">'Farmacia, Química Fina y Otros'</span><span class="s7">].</span><span class="s5">map</span><span class="s7">(</span><span class="s5">l </span><span class="s7">=&gt;</span><span class="s5"> wrapLabel</span><span class="s7">(</span><span class="s5">l</span><span class="s7">,</span><span class="s5"> </span><span class="s13">20</span><span class="s7">)),</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>datasets</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>label</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'Cuota de Mercado'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>data</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span><span class="s13">65</span><span class="s7">,</span><span class="s1"> </span><span class="s13">25</span><span class="s7">,</span><span class="s1"> </span><span class="s13">10</span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>backgroundColor</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span><span class="s8">'#1976D2'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'#42A5F5'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'#90CAF9'</span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>borderColor</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'#ffffff'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>borderWidth</span><span class="s7">:</span><span class="s1"> </span><span class="s13">4</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>hoverOffset</span><span class="s7">:</span><span class="s1"> </span><span class="s13">15</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">}]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>options</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>responsive</span><span class="s7">:</span><span class="s1"> </span><span class="s11">true</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>maintainAspectRatio</span><span class="s7">:</span><span class="s1"> </span><span class="s11">false</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>plugins</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>legend</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> position</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'bottom'</span><span class="s7">,</span><span class="s1"> labels</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> padding</span><span class="s7">:</span><span class="s1"> </span><span class="s13">20</span><span class="s7">,</span><span class="s1"> font</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> size</span><span class="s7">:</span><span class="s1"> </span><span class="s13">14</span><span class="s1"> </span><span class="s7">}}},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>tooltip</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> callbacks</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> title</span><span class="s7">:</span><span class="s1"> tooltipTitleCallback </span><span class="s7">},</span><span class="s1"> bodyFont</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> size</span><span class="s7">:</span><span class="s1"> </span><span class="s13">14</span><span class="s1"> </span><span class="s7">},</span><span class="s1"> titleFont</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> size</span><span class="s7">:</span><span class="s1"> </span><span class="s13">16</span><span class="s1"> </span><span class="s7">},</span><span class="s1"> padding</span><span class="s7">:</span><span class="s1"> </span><span class="s13">12</span><span class="s7">,</span><span class="s1"> cornerRadius</span><span class="s7">:</span><span class="s1"> </span><span class="s13">8</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>cutout</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'60%'</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Plugin for drawing icons inside the bars</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> barIconsPlugin </span><span class="s7">=</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>id</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'barIcons'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>afterDraw</span><span class="s7">(</span><span class="s1">chart</span><span class="s7">,</span><span class="s1"> args</span><span class="s7">,</span><span class="s1"> options</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> ctx</span><span class="s7">,</span><span class="s1"> data</span><span class="s7">,</span><span class="s1"> chartArea</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> left </span><span class="s7">},</span><span class="s1"> scales</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> y </span><span class="s7">}</span><span class="s1"> </span><span class="s7">}</span><span class="s1"> </span><span class="s7">=</span><span class="s1"> chart</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>ctx</span><span class="s7">.</span><span class="s1">save</span><span class="s7">();</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> icons </span><span class="s7">=</span><span class="s1"> </span><span class="s7">[</span><span class="s8">'🍔'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'🌿'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'💊'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'🧼'</span><span class="s7">];</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>data</span><span class="s7">.</span><span class="s1">datasets</span><span class="s7">[</span><span class="s13">0</span><span class="s7">].</span><span class="s1">data</span><span class="s7">.</span><span class="s1">forEach</span><span class="s7">((</span><span class="s1">datapoint</span><span class="s7">,</span><span class="s1"> index</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s11">const</span><span class="s1"> icon </span><span class="s7">=</span><span class="s1"> icons</span><span class="s7">[</span><span class="s1">index</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>ctx</span><span class="s7">.</span><span class="s1">font </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'bold 18px sans-serif'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>ctx</span><span class="s7">.</span><span class="s1">fillStyle </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'rgba(0, 0, 0, 0.5)'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>ctx</span><span class="s7">.</span><span class="s1">textAlign </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'center'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>ctx</span><span class="s7">.</span><span class="s1">textBaseline </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'middle'</span><span class="s7">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s1">// Position icon inside the bar, near the y-axis</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s11">const</span><span class="s1"> yPos </span><span class="s7">=</span><span class="s1"> y</span><span class="s7">.</span><span class="s1">getPixelForValue</span><span class="s7">(</span><span class="s1">index</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>ctx</span><span class="s7">.</span><span class="s1">fillText</span><span class="s7">(</span><span class="s1">icon</span><span class="s7">,</span><span class="s1"> left </span><span class="s7">+</span><span class="s1"> </span><span class="s13">20</span><span class="s7">,</span><span class="s1"> yPos</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>ctx</span><span class="s7">.</span><span class="s1">restore</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> marketGrowthCtx </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'marketGrowthChart'</span><span class="s7">).</span><span class="s1">getContext</span><span class="s7">(</span><span class="s8">'2d'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">new</span><span class="s1"> </span><span class="s14">Chart</span><span class="s7">(</span><span class="s1">marketGrowthCtx</span><span class="s7">,</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>type</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'bar'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>data</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>labels</span><span class="s7">:</span><span class="s5"> </span><span class="s7">[</span><span class="s1">'Alimentos y Bebidas'</span><span class="s7">,</span><span class="s5"> </span><span class="s1">'Biocombustibles'</span><span class="s7">,</span><span class="s5"> </span><span class="s1">'Farmacéutica'</span><span class="s7">,</span><span class="s5"> </span><span class="s1">'Textil y Detergentes'</span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>datasets</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                        </span>label</span><span class="s7">:</span><span class="s5"> </span><span class="s1">'Tasa de Crecimiento Anual Compuesta (%)'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>data</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span><span class="s13">5.8</span><span class="s7">,</span><span class="s1"> </span><span class="s13">7.5</span><span class="s7">,</span><span class="s1"> </span><span class="s13">6.9</span><span class="s7">,</span><span class="s1"> </span><span class="s13">5.1</span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>backgroundColor</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s8">'rgba(25, 118, 210, 0.7)'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s8">'rgba(66, 165, 245, 0.7)'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s8">'rgba(144, 202, 249, 0.7)'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s8">'rgba(187, 222, 251, 0.7)'</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>borderColor</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s8">'#1976D2'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s8">'#42A5F5'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s8">'#90CAF9'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                           </span></span><span class="s8">'#BBDEFB'</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s7">],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>borderWidth</span><span class="s7">:</span><span class="s1"> </span><span class="s13">2</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">}]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>options</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span>indexAxis</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'y'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span>responsive</span><span class="s7">:</span><span class="s1"> </span><span class="s11">true</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span>maintainAspectRatio</span><span class="s7">:</span><span class="s1"> </span><span class="s11">false</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span>plugins</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span>legend</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span>display</span><span class="s7">:</span><span class="s1"> </span><span class="s11">false</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span>tooltip</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span>callbacks</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span>label</span><span class="s7">:</span><span class="s1"> </span><span class="s11">function</span><span class="s7">(</span><span class="s1">context</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s11">let</span><span class="s1"> label </span><span class="s7">=</span><span class="s1"> context</span><span class="s7">.</span><span class="s1">dataset</span><span class="s7">.</span><span class="s1">label </span><span class="s7">||</span><span class="s1"> </span><span class="s8">''</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">label</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                         </span>label </span><span class="s7">+=</span><span class="s1"> </span><span class="s8">': '</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">context</span><span class="s7">.</span><span class="s1">parsed</span><span class="s7">.</span><span class="s1">x </span><span class="s7">!==</span><span class="s1"> </span><span class="s11">null</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                         </span>label </span><span class="s7">+=</span><span class="s1"> context</span><span class="s7">.</span><span class="s1">parsed</span><span class="s7">.</span><span class="s1">x </span><span class="s7">+</span><span class="s1"> </span><span class="s8">'%'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                     </span></span><span class="s11">return</span><span class="s1"> label</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span>scales</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span>x</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span>beginAtZero</span><span class="s7">:</span><span class="s1"> </span><span class="s11">true</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span>title</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span>display</span><span class="s7">:</span><span class="s1"> </span><span class="s11">true</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span>text</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'TCAC (%) 2025-2030'</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span>y</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p7"><span class="s5"><span class="Apple-converted-space">                             </span></span><span class="s1">// Add padding to the left to make space for the icon</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span>afterFit</span><span class="s7">:</span><span class="s1"> </span><span class="s7">(</span><span class="s1">scaleInstance</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                 </span>scaleInstance</span><span class="s7">.</span><span class="s1">width </span><span class="s7">=</span><span class="s1"> </span><span class="s13">150</span><span class="s7">;</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                             </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                         </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>plugins</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span><span class="s1">barIconsPlugin</span><span class="s7">]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> diagramSteps </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">querySelectorAll</span><span class="s7">(</span><span class="s8">'.mechanism-diagram-step'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> descriptions </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">querySelectorAll</span><span class="s7">(</span><span class="s8">'#mechanism-descriptions &gt; div'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>diagramSteps</span><span class="s7">.</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">step </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>step</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'click'</span><span class="s7">,</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> stepNum </span><span class="s7">=</span><span class="s1"> step</span><span class="s7">.</span><span class="s1">id</span><span class="s7">.</span><span class="s1">split</span><span class="s7">(</span><span class="s8">'-'</span><span class="s7">)[</span><span class="s13">2</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>diagramSteps</span><span class="s7">.</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">s </span><span class="s7">=&gt;</span><span class="s1"> s</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'active'</span><span class="s7">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>step</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'active'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>descriptions</span><span class="s7">.</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">d </span><span class="s7">=&gt;</span><span class="s1"> d</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">`desc-step-</span><span class="s7">${</span><span class="s1">stepNum</span><span class="s7">}</span><span class="s8">`</span><span class="s7">).</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
+<body class="bg-slate-100 text-slate-800">
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="mechanism" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-[#00449E] mb-8">Mecanismo de la Triosafosfato Isomerasa (TIM)</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 items-center mb-12">
+                    <!-- Step 1 -->
+                    <div id="diagram-step-1" class="mechanism-diagram-step active bg-slate-50 rounded-lg p-4 text-center">
+                        <div class="flex justify-center items-center h-28 gap-4 relative">
+                           <div class="enzyme-body"><div class="active-site"></div></div>
+                           <span class="text-4xl text-slate-400">+</span>
+                           <div class="relative">
+                               <div class="substrate-mol"></div>
+                               <div class="mol-label -bottom-6">DHAP</div>
+                           </div>
+                        </div>
+                        <p class="mt-4 font-semibold">1. Unión del Sustrato</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="diagram-arrow text-center hidden lg:block self-center">→</div>
+                    <!-- Step 2 -->
+                    <div id="diagram-step-2" class="mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center">
+                        <div class="flex justify-center items-center h-28 relative">
+                           <div class="enzyme-body closed">
+                               <div class="absolute" style="top: 32px; left: 32px;">
+                                   <div class="substrate-mol"></div>
+                                   <div class="proton" style="top: -5px; left: 7px;">H+</div>
+                               </div>
+                               <div class="residue-label" style="top: 8px; left: 25px;">Glu167</div>
+                               <div class="proton-arrow" style="top: 10px; left: 30px; transform: rotate(-45deg);">→</div>
+                               <div class="residue-label" style="bottom: 8px; left: 25px;">His95</div>
+                               <div class="proton-arrow" style="bottom: 10px; left: 30px; transform: rotate(45deg);">←</div>
+                               <div class="proton" style="bottom: -2px; left: 10px;">H+</div>
+                           </div>
+                        </div>
+                        <p class="mt-4 font-semibold">2. Transferencia de Protones</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="diagram-arrow text-center hidden lg:block self-center">→</div>
+                    <!-- Step 3 -->
+                    <div id="diagram-step-3" class="mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center">
+                        <div class="flex justify-center items-center h-28 relative">
+                           <div class="enzyme-body closed" style="background: linear-gradient(135deg, #81D4FA, #0288D1);">
+                                <div class="absolute" style="top: 32px; left: 32px;">
+                                   <div class="product-mol"></div>
+                                </div>
+                                <div class="residue-label" style="top: 8px; left: 25px;">Glu167</div>
+                                <div class="proton-arrow" style="top: 10px; left: 30px; transform: rotate(135deg);">←</div>
+                                <div class="proton" style="top: -2px; left: 10px;">H+</div>
+                           </div>
+                        </div>
+                        <p class="mt-4 font-semibold">3. Formación del Producto</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="diagram-arrow text-center hidden lg:block self-center">→</div>
+                    <!-- Step 4 -->
+                    <div id="diagram-step-4" class="mechanism-diagram-step bg-slate-50 rounded-lg p-4 text-center">
+                        <div class="flex justify-center items-center h-28 gap-4 relative">
+                           <div class="enzyme-body"><div class="active-site"></div></div>
+                           <span class="text-4xl text-slate-400">+</span>
+                           <div class="relative">
+                               <div class="product-mol"></div>
+                               <div class="mol-label -bottom-6">GAP</div>
+                           </div>
+                        </div>
+                        <p class="mt-4 font-semibold">4. Liberación del Producto</p>
+                    </div>
+                </div>
+                <div id="mechanism-descriptions" class="bg-slate-100 p-6 rounded-lg min-h-[150px]">
+                    <div id="desc-step-1" class="mechanism-description">
+                        <h4 class="font-bold text-lg text-[#1976D2]">Paso 1: Unión del Sustrato y Cierre del Bucle</h4>
+                        <p>El sustrato (DHAP) se une al sitio activo de la enzima. Este evento desencadena que un bucle flexible se cierre sobre él, protegiendo los intermedios reactivos del agua y posicionando los residuos catalíticos.</p>
+                    </div>
+                    <div id="desc-step-2" class="mechanism-description hidden">
+                        <h4 class="font-bold text-lg text-[#1976D2]">Paso 2: Formación del Intermedio *cis*-Enediolato</h4>
+                        <p>Dentro del sitio activo cerrado, se produce una transferencia de protones concertada. El residuo catalítico <span class="font-bold">Glu167</span> actúa como una base para abstraer un protón (H+) del sustrato. Al mismo tiempo, <span class="font-bold">His95</span> actúa como un ácido, donando un protón. Esto forma un intermedio de alta energía (Knowles, 1991).</p>
+                    </div>
+                    <div id="desc-step-3" class="mechanism-description hidden">
+                        <h4 class="font-bold text-lg text-[#1976D2]">Paso 3: Reprotonación y Formación del Producto</h4>
+                        <p>La enzima invierte la transferencia de protones. El <span class="font-bold">Glu167</span>, ahora protonado y actuando como un ácido, devuelve el protón al intermedio en una posición diferente, mientras <span class="font-bold">His95</span> recupera su protón. Este transbordo preciso forma el producto isómero (GAP).</p>
+                    </div>
+                    <div id="desc-step-4" class="mechanism-description hidden">
+                        <h4 class="font-bold text-lg text-[#1976D2]">Paso 4: Apertura del Bucle y Liberación</h4>
+                        <p>Una vez formado el producto (GAP), el bucle "tapa" se abre, el sitio activo queda expuesto nuevamente al solvente y el producto se disocia. La enzima queda regenerada y lista para otro ciclo catalítico.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="industry" class="my-16">
+             <h2 class="text-3xl font-bold text-center text-[#00449E] mb-8">Impacto en la Industria y la Biotecnología</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">Cuota de Mercado Histórica</h3>
+                     <p class="text-center text-sm mb-4">La producción de HFCS ha sido históricamente el pilar del mercado de las isomerasas.</p>
+                    <div class="chart-container">
+                        <canvas id="marketShareChart"></canvas>
+                    </div>
+                     <div class="mt-4 text-xs text-slate-500 text-center">
+                        <p>Basado en datos de Bhosale et al. (1996) y Li et al. (2012).</p>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">Proyecciones de Crecimiento (2025-2030)</h3>
+                    <p class="text-center text-sm mb-4">Se espera que la demanda de biocombustibles y productos farmacéuticos impulse el crecimiento futuro del mercado.</p>
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                     <div class="mt-4 text-xs text-slate-500 text-center">
+                        <p>Estimaciones basadas en análisis de tendencias de mercado (Grand View Research, 2024).</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-12 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Aplicaciones Clave</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-[#1976D2] mb-2">Jarabe de Maíz de Alta Fructosa (HFCS)</h4>
+                            <p class="mb-4">La Glucosa Isomerasa (GI) es la piedra angular en la producción de HFCS, al convertir la glucosa en fructosa, que es <span class="font-bold text-2xl text-[#005CB9]">1.3x</span> más dulce.</p>
+                            <div class="flex items-center justify-center text-center">
+                                <div class="p-4 bg-slate-100 rounded-lg"><span class="font-bold">Glucosa</span></div>
+                                 <div class="flow-arrow"></div>
+                                <div class="relative p-4 bg-blue-100 rounded-lg">
+                                    <span class="absolute -top-3 -right-3 bg-[#1976D2] text-white text-xs font-bold px-2 py-1 rounded-full">GI</span>
+                                    <span class="font-bold">Fructosa</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-[#1976D2] mb-2">Producción de Bioetanol de 2ª Generación</h4>
+                            <p class="mb-4">La Xilosa Isomerasa (XI) permite a la levadura fermentar la xilosa de residuos agrícolas para producir biocombustibles.</p>
+                             <div class="flex items-center justify-center text-center">
+                                <div class="p-4 bg-slate-100 rounded-lg"><span class="font-bold">Xilosa</span></div>
+                                <div class="flow-arrow"></div>
+                                <div class="relative p-4 bg-blue-100 rounded-lg">
+                                    <span class="absolute -top-3 -right-3 bg-[#1976D2] text-white text-xs font-bold px-2 py-1 rounded-full">XI</span>
+                                    <span class="font-bold">Etanol</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section id="health" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-[#00449E] mb-2">Un Interruptor de Doble Filo para la Salud</h2>
+            <p class="text-lg text-center max-w-4xl mx-auto mb-12">La actividad de las isomerasas es crítica en la salud humana. Su desregulación tiene efectos devastadores en enfermedades como el cáncer y el Alzheimer, convirtiéndolas en dianas terapéuticas.</p>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-2xl font-bold text-center mb-8">El Caso de Pin1: Héroe y Villano</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="border-2 border-red-200 bg-red-50 rounded-lg p-6">
+                        <h4 class="text-2xl font-bold text-red-700 text-center mb-4">En el Cáncer: Sobreexpresión</h4>
+                        <p class="mb-6 text-center">Pin1 está hiperactiva. Actúa como un acelerador del crecimiento tumoral al "encender" oncogenes e "apagar" supresores de tumores.</p>
+                        <div class="text-center">
+                            <div class="p-4 bg-red-100 rounded-lg inline-block"><span class="font-bold text-red-800">Pin1 ↑ (Hiperactiva)</span></div>
+                            <div class="flow-arrow-down block my-2 text-red-400"></div>
+                            <div class="p-4 bg-red-200 rounded-lg inline-block"><span class="font-bold text-red-900">Proliferación Celular</span></div>
+                            <div class="mt-6">
+                                <span class="font-bold text-lg text-red-700">Objetivo Terapéutico: INHIBIR Pin1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="border-2 border-sky-200 bg-sky-50 rounded-lg p-6">
+                        <h4 class="text-2xl font-bold text-sky-700 text-center mb-4">En el Alzheimer: Disminución</h4>
+                        <p class="mb-6 text-center">La función de Pin1 está disminuida. Su ausencia impide que cumpla su rol neuroprotector, llevando a la agregación de proteínas tóxicas.</p>
+                        <div class="text-center">
+                            <div class="p-4 bg-sky-100 rounded-lg inline-block"><span class="font-bold text-sky-800">Pin1 ↓ (Inactiva)</span></div>
+                             <div class="flow-arrow-down block my-2 text-sky-400"></div>
+                            <div class="p-4 bg-sky-200 rounded-lg inline-block"><span class="font-bold text-sky-900">Muerte Neuronal</span></div>
+                            <div class="mt-6">
+                                <span class="font-bold text-lg text-sky-700">Objetivo Terapéutico: ACTIVAR Pin1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="other-applications" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-[#00449E] mb-8">Otras Aplicaciones Industriales y Biotecnológicas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- App 1: Rare Sugars -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-4xl mb-4">🍬</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#005CB9]">Azúcares Raros</h3>
+                    <p class="text-sm">Enzimas como la L-Arabinosa Isomerasa se usan para producir D-tagatosa, un edulcorante bajo en calorías para alimentos funcionales y productos para diabéticos.</p>
+                </div>
+                <!-- App 2: Pharma -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-4xl mb-4">⚗️</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#005CB9]">Síntesis Farmacéutica</h3>
+                    <p class="text-sm">Las racemasas son clave en la producción de intermedios quirales puros, separando enantiómeros para crear fármacos más seguros y eficaces.</p>
+                </div>
+                <!-- App 3: Textiles -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-4xl mb-4">👕</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#005CB9]">Industria Textil</h3>
+                    <p class="text-sm">Las isomerasas ayudan en el procesamiento de fibras, mejorando la calidad de los tejidos y reduciendo el uso de productos químicos agresivos en el tratamiento de textiles.</p>
+                </div>
+                <!-- App 4: Diagnostics -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-4xl mb-4">🔬</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#005CB9]">Biocensores y Diagnóstico</h3>
+                    <p class="text-sm">La actividad de isomerasas específicas, como la GPI, puede medirse en biocensores para el diagnóstico rápido de ciertas enfermedades metabólicas o como marcadores.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="bibliography" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-[#00449E] mb-8">Bibliografía</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8 text-sm md:text-base">
+                <div class="bibliography-item">
+                    <p>Bhosale, S. H., Rao, M. B., & Deshpande, V. V. (1996). Molecular and industrial aspects of glucose isomerase. <em>Microbiological Reviews, 60</em>(2), 280–300. https://doi.org/10.1128/mr.60.2.280-300.1996</p>
+                </div>
+                <div class="bibliography-item">
+                    <p>Grand View Research. (2024). *Industrial Enzymes Market Size, Share & Trends Analysis Report By Product, By Source, By Application (Food & Beverages, Biofuel), By Region, And Segment Forecasts, 2024 - 2030*. Report ID: GVR-1-68038-735-5. <a href="https://www.grandviewresearch.com/industry-analysis/industrial-enzymes-market" class="text-blue-600 hover:underline" target="_blank">Enlace al informe</a></p>
+                </div>
+                <div class="bibliography-item">
+                    <p>Knowles, J. R. (1991). Enzyme catalysis: not different, just better. <em>Nature, 350</em>(6314), 121–124. https://doi.org/10.1038/350121a0</p>
+                </div>
+                 <div class="bibliography-item">
+                    <p>Li, S., Yang, X., Yang, S., Zhu, M., & Wang, X. (2012). Technology prospecting on enzymes: application, marketing and engineering. <em>Computational and Structural Biotechnology Journal, 2</em>(3), e201209017. https://doi.org/10.5936/csbj.201209017</p>
+                </div>
+                 <div class="bibliography-item">
+                   <p>Mathews, C. K., Van Holde, K. E., & Ahern, K. G. (2003). *Bioquímica* (3ª ed.). Addison Wesley.</p>
+                </div>
+                <div class="bibliography-item">
+                    <p>Lu, K. P., & Zhou, X. Z. (2007). The prolyl isomerase Pin1: a pivotal new twist in phosphorylation signalling and disease. <em>Nature Reviews Molecular Cell Biology, 8</em>(11), 904–916. https://doi.org/10.1038/nrm2261</p>
+                </div>
+                 <div class="bibliography-item">
+                    <p>Xu, S., Sankar, S., & Neamati, N. (2014). Protein disulfide isomerase: a promising target for cancer therapy. <em>Drug Discovery Today, 19</em>(3), 222–240. https://doi.org/10.1016/j.drudis.2013.10.017</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-100 text-white text-center py-6 px-4 mt-8">
+    </footer>
+
+    <script>
+        window.addEventListener('load', function () {
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) { return label.join(' '); }
+                return label;
+            };
+            
+            const wrapLabel = (label, maxWidth) => {
+                if (label.length <= maxWidth) { return label; }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const marketShareCtx = document.getElementById('marketShareChart').getContext('2d');
+            new Chart(marketShareCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Jarabe de Maíz de Alta Fructosa (HFCS)', 'Producción de Bioetanol', 'Farmacia, Química Fina y Otros'].map(l => wrapLabel(l, 20)),
+                    datasets: [{
+                        label: 'Cuota de Mercado',
+                        data: [65, 25, 10],
+                        backgroundColor: ['#1976D2', '#42A5F5', '#90CAF9'],
+                        borderColor: '#ffffff',
+                        borderWidth: 4,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 20, font: { size: 14 }}},
+                        tooltip: { callbacks: { title: tooltipTitleCallback }, bodyFont: { size: 14 }, titleFont: { size: 16 }, padding: 12, cornerRadius: 8 }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            const barIconsPlugin = {
+                id: 'barIcons',
+                afterDraw(chart, args, options) {
+                    const { ctx, data, chartArea: { left }, scales: { y } } = chart;
+                    ctx.save();
+                    
+                    const icons = ['�', '🌿', '💊', '🧼'];
+
+                    data.datasets[0].data.forEach((datapoint, index) => {
+                        const icon = icons[index];
+                        ctx.font = 'bold 18px sans-serif';
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        const yPos = y.getPixelForValue(index);
+                        ctx.fillText(icon, left + 20, yPos);
+                    });
+                    
+                    ctx.restore();
+                }
+            };
+
+            const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
+            new Chart(marketGrowthCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Alimentos y Bebidas', 'Biocombustibles', 'Farmacéutica', 'Textil y Detergentes'],
+                    datasets: [{
+                        label: 'Tasa de Crecimiento Anual Compuesta (%)',
+                        data: [5.8, 7.5, 6.9, 5.1],
+                        backgroundColor: [
+                            'rgba(25, 118, 210, 0.7)',
+                            'rgba(66, 165, 245, 0.7)',
+                            'rgba(144, 202, 249, 0.7)',
+                            'rgba(187, 222, 251, 0.7)'
+                        ],
+                        borderColor: [
+                           '#1976D2',
+                           '#42A5F5',
+                           '#90CAF9',
+                           '#BBDEFB'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                     indexAxis: 'y',
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     plugins: {
+                         legend: {
+                             display: false
+                         },
+                         tooltip: {
+                             callbacks: {
+                                 label: function(context) {
+                                     let label = context.dataset.label || '';
+                                     if (label) {
+                                         label += ': ';
+                                     }
+                                     if (context.parsed.x !== null) {
+                                         label += context.parsed.x + '%';
+                                     }
+                                     return label;
+                                 }
+                             }
+                         }
+                     },
+                     scales: {
+                         x: {
+                             beginAtZero: true,
+                             title: {
+                                 display: true,
+                                 text: 'TCAC (%) 2025-2030'
+                             }
+                         },
+                         y: {
+                             afterFit: (scaleInstance) => {
+                                 scaleInstance.width = 150; 
+                             }
+                         }
+                     }
+                },
+                plugins: [barIconsPlugin]
+            });
+
+            const diagramSteps = document.querySelectorAll('.mechanism-diagram-step');
+            const descriptions = document.querySelectorAll('#mechanism-descriptions > div');
+            diagramSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNum = step.id.split('-')[2];
+                    diagramSteps.forEach(s => s.classList.remove('active'));
+                    step.classList.add('active');
+                    descriptions.forEach(d => d.classList.add('hidden'));
+                    document.getElementById(`desc-step-${stepNum}`).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
